@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.lmsproject.dto.ScheduleInDto;
 import org.example.lmsproject.dto.ScheduleOutDto;
 import org.example.lmsproject.service.SchedulesService;
-import org.example.lmsproject.util.LmsProjectUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,9 +22,7 @@ public class SchedulesController {
     @GetMapping()
     public List<ScheduleOutDto> getAll(@RequestParam(value = "groupId",required = false) Long groupId,
                                        @RequestParam(value = "teacherId", required = false) Long teacherId,
-                                       @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                       @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
-        Pageable pageable = LmsProjectUtil.getPageable(pageSize, pageNumber);
+                                       Pageable pageable) {
         return schedulesService.getSchedulesByQuery(groupId, teacherId, pageable);
     }
 

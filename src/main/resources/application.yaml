@@ -21,6 +21,6 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
-  #liquibase:
-   # drop-first: true
-
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html

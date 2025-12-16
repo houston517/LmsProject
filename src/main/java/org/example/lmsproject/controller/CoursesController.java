@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.lmsproject.dto.CourseInDto;
 import org.example.lmsproject.dto.CourseOutDto;
 import org.example.lmsproject.service.CoursesService;
-import org.example.lmsproject.util.LmsProjectUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,9 +19,7 @@ import java.util.List;
 public class CoursesController {
     private final CoursesService coursesService;
     @GetMapping()
-    public List<CourseOutDto> getAll(@RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                     @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
-        Pageable pageable = LmsProjectUtil.getPageable(pageSize, pageNumber);
+    public List<CourseOutDto> getAll(Pageable pageable) {
         return coursesService.getAll(pageable);
     }
 

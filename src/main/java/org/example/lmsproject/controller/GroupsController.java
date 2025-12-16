@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.lmsproject.dto.GroupInDto;
 import org.example.lmsproject.dto.GroupOutDto;
 import org.example.lmsproject.service.GroupsService;
-import org.example.lmsproject.util.LmsProjectUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,9 +20,7 @@ public class GroupsController {
     private final GroupsService groupsService;
 
     @GetMapping()
-    public List<GroupOutDto> getAll(@RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                    @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
-        Pageable pageable = LmsProjectUtil.getPageable(pageSize, pageNumber);
+    public List<GroupOutDto> getAll(Pageable pageable) {
         return groupsService.getAll(pageable);
     }
 
