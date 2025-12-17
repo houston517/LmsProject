@@ -71,10 +71,4 @@ public class SchedulesService {
     public void delete(ScheduleInDto scheduleInDto){
         schedulesRepository.deleteById(scheduleInDto.getId());
     }
-
-    @Scheduled(cron = "0 0 0 ? * *")
-    @Transactional
-    public void deleteYearOldSchedules(){
-        schedulesRepository.deleteByLessonDateBefore(LocalDateTime.now().minusYears(1));
-    }
 }
