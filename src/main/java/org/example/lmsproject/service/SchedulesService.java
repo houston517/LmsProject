@@ -11,6 +11,7 @@ import org.example.lmsproject.model.Group;
 import org.example.lmsproject.model.Schedule;
 import org.example.lmsproject.model.Teacher;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,5 +70,11 @@ public class SchedulesService {
     @Transactional
     public void delete(ScheduleInDto scheduleInDto){
         schedulesRepository.deleteById(scheduleInDto.getId());
+    }
+
+    @Scheduled(cron = "0 0 0 ? * *")
+    @Transactional
+    public void deleteYearOldSchedules(){
+        schedulesRepository.deleteByLessonDateBefore(LocalDateTime.now().minusYears(1));
     }
 }
