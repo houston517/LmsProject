@@ -1,4 +1,4 @@
-package org.example.LMSProject;
+package org.example.lmsproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

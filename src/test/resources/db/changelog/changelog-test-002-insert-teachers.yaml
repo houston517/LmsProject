@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6-insert-teachers
+      author: Aleksandr Sidorov
+      changes:
+        - insert:
+            tableName: teachers
+            columns:
+              - column:
+                  name: name
+                  value: Иван
+              - column:
+                  name: surname
+                  value: Петров
+
+        - insert:
+            tableName: teachers
+            columns:
+              - column:
+                  name: name
+                  value: Мария
+              - column:
+                  name: surname
+                  value: Сидорова
+
+        - insert:
+            tableName: teachers
+            columns:
+              - column:
+                  name: name
+                  value: Алексей
+              - column:
+                  name: surname
+                  value: Иванов
