@@ -1,49 +1,41 @@
 package org.example.lmsproject.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.example.lmsproject.AbstractIt;
+import org.example.lmsproject.dao.TeachersRepository;
 import org.example.lmsproject.model.Teacher;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.web.client.RestClient;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
-@ActiveProfiles("test")
-public class TeachersControllerTest {
-    @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("test");
+@RequiredArgsConstructor
+public class TeachersControllerTest extends AbstractIt {
 
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-        registry.add("spring.liquibase.change-log",
-                () -> "classpath:db/changelog/db.changelog-test-master.yaml");
-    }
 
-    @LocalServerPort
-    private int port;
-
-    private RestClient restClient;
+    @Autowired
+    private TeachersRepository teachersRepository;
 
     @BeforeEach
+    @Transactional
     void setUp() {
-        this.restClient = RestClient.create("http://localhost:" + port);
+        Teacher teacher1 = new Teacher(null,"Иван","Петров", null);
+        Teacher teacher2 = new Teacher(null,"Мария","Сидорова", null);
+        Teacher teacher3 = new Teacher(null,"Алексей","Иванов", null);
+
+        teachersRepository.save(teacher1);
+        teachersRepository.save(teacher2);
+        teachersRepository.save(teacher3);
+    }
+
+    @AfterEach
+    @Transactional
+    void tearDown() {
+        teachersRepository.deleteAll();
     }
 
     @Test
@@ -56,15 +48,12 @@ public class TeachersControllerTest {
         assertNotNull(teachers);
         assertEquals(3, teachers.length);
 
-        assertEquals(1, teachers[0].getId());
         assertEquals("Иван", teachers[0].getName());
         assertEquals("Петров",  teachers[0].getSurname());
 
-        assertEquals(2, teachers[1].getId());
         assertEquals("Мария", teachers[1].getName());
         assertEquals("Сидорова",  teachers[1].getSurname());
 
-        assertEquals(3, teachers[2].getId());
         assertEquals("Алексей", teachers[2].getName());
         assertEquals("Иванов",  teachers[2].getSurname());
 
@@ -78,6 +67,7 @@ public class TeachersControllerTest {
             .retrieve().body(Teacher[].class);
         assertNotNull(teachers);
         assertEquals(1, teachers.length);
-        assertEquals(1, teachers[0].getId());
+        assertEquals("Иван", teachers[0].getName());
+        assertEquals("Петров", teachers[0].getSurname());
     }
 }

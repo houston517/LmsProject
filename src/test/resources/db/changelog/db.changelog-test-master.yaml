@@ -1,5 +1,3 @@
 databaseChangeLog:
   - include:
-      file: classpath:db/changelog/changelog-test-001-initial.yaml
-  - include:
-      file: classpath:db/changelog/changelog-test-002-insert-teachers.yaml
+      file: classpath:db/changelog/changelog-001-initial.yaml
