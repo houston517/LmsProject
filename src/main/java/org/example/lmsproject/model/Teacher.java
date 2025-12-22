@@ -1,10 +1,7 @@
 package org.example.lmsproject.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
