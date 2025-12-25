@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @RequiredArgsConstructor
 public class TeachersControllerTest extends AbstractIt {
-
 
     @Autowired
     private TeachersRepository teachersRepository;
