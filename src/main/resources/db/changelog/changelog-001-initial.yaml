@@ -1,0 +1,130 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-groups-table
+      author: Aleksandr Sidorov
+      changes:
+        - createTable:
+            tableName: groups
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(300)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2-create-students-table
+      author: Aleksandr Sidorov
+      changes:
+        - createTable:
+            tableName: students
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+              - column:
+                  name: surname
+                  type: varchar(100)
+              - column:
+                  name: group_id
+                  type: bigint
+                  defaultValue: null
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_students_group_id
+                    references: groups(id)
+
+  - changeSet:
+      id: 3-create-teachers-table
+      author: Aleksandr Sidorov
+      changes:
+        - createTable:
+            tableName: teachers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+              - column:
+                  name: surname
+                  type: varchar(100)
+
+  - changeSet:
+      id: 4-create-courses-table
+      author: Aleksandr Sidorov
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(500)
+
+  - changeSet:
+      id: 5-create-schedule-table
+      author: Aleksandr Sidorov
+      changes:
+        - createTable:
+            tableName: schedule
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: group_id
+                  type: bigint
+                  defaultValue: null
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_schedule_group_id
+                    references: groups(id)
+              - column:
+                  name: teacher_id
+                  type: bigint
+                  defaultValue: null
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_schedule_teacher_id
+                    references: teachers(id)
+              - column:
+                  name: course_id
+                  type: bigint
+                  defaultValue: null
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_schedule_course_id
+                    references: courses(id)
+              - column:
+                  name: lesson_date
+                  type: timestamp

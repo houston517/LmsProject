@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: LMSProject
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/lmsproject
+    username: postgres
+    password: postgres
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  jackson:
+    default-property-inclusion: non_null
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+
+app:
+  scheduler:
+    delete-old-schedules:
+      cron: "0 0 0 ? * *"
